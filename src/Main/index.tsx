@@ -1,4 +1,4 @@
-import Header from "Common/Header";
+import Header from "Main/Header/Header";
 import React from "react";
 import StopContainer, { StopItemT } from "./StopContainer";
 
