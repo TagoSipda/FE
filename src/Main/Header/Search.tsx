@@ -60,7 +60,11 @@ const Search = () => {
       </section>
 
       {/* Search history */}
-      <div className="bg-white py-5 px-5 border-dashed border-2 border-disabled rounded-2.5xl shadow-slight-drop-container top-[-13px] absolute w-full top-6">
+      <div
+        className={`bg-white ${
+          isClicked && history.current.length > 0 ? "py-5 px-5" : "h-0 p-0"
+        } border-dashed border-2 border-disabled overflow-hidden transition-all rounded-2.5xl shadow-slight-drop-container absolute w-full top-6`}
+      >
         {history.current.map((item, index) => {
           return (
             <div
