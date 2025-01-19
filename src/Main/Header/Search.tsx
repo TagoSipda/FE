@@ -1,25 +1,66 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchImg from "images/search.svg";
+import useLocalStorage from "hooks/useLocalStorage";
 
 const Search = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const inputValue = useRef<string>("");
 
-  const history = useRef<string[]>(["수원", "13", "12"]);
+  const { saveLS, getValueFromLS } = useLocalStorage();
 
-  // 최근 검색어 저장 / 불러오기 로직
-  // 검색 버튼 클릭 or isClicked === true && Enter 클릭 시 -> 검색 API 호출, 최근 검색어 리스트에 저장
+  const history = useRef<string[]>([]);
+
+  const getHistoryValues = async () => {
+    const originValue = await getValueFromLS("search history");
+    const value: string[] =
+      originValue && typeof originValue === "string"
+        ? JSON.parse(originValue)
+        : [];
+
+    return value;
+  };
+
+  useEffect(() => {
+    const getValues = async () => {
+      const value = await getHistoryValues();
+      history.current = value;
+    };
+
+    getValues();
+  }, []);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // inputValue.current = e.currentTarget.value;
+    inputValue.current = e.currentTarget.value;
+  };
+
+  const activeSearch = async () => {
+    const value = await getHistoryValues();
+
+    const recentHistory = value.length > 0 ? value[value.length - 1] : "";
+
+    if (inputValue.current === recentHistory) return;
+
+    value.push(inputValue.current);
+    saveLS("search history", JSON.stringify(value));
   };
 
   const inputKeydownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // e?.key === 'Enter' && console.log( inputValue.current);
+    /* 
+    229 is here to solve the problem with Korean. 
+    As Chrome has the issue when user inputs Korean, they only gets it's keycode as 229 and make it to be composing.
+    https://minjung-jeon.github.io/IME-keyCode-229-issue/
+    */
+    if (e?.key === "Enter" && e?.keyCode !== 229) {
+      e.stopPropagation();
+
+      activeSearch();
+      console.log("inputKeydownHandler", e?.key);
+    }
   };
 
   const clickSearchBtnHandler = () => {
-    // console.log(inputValue.current);
+    console.log("clickSearchBtnHandler");
+    activeSearch();
   };
 
   return (
