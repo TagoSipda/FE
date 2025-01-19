@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchImg from "images/search.svg";
 import useLocalStorage from "hooks/useLocalStorage";
 
 const Search = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const inputValue = useRef<string>("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [history, setHistory] = useState<string[]>([]);
 
   const { saveLS, getValueFromLS } = useLocalStorage();
-
-  const history = useRef<string[]>([]);
 
   const getHistoryValues = async () => {
     const originValue = await getValueFromLS("search history");
@@ -23,14 +22,14 @@ const Search = () => {
   useEffect(() => {
     const getValues = async () => {
       const value = await getHistoryValues();
-      history.current = value;
+      setHistory(value.reverse());
     };
 
     getValues();
-  }, []);
+  }, [inputValue]);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    inputValue.current = e.currentTarget.value;
+    setInputValue(e.currentTarget.value);
   };
 
   const activeSearch = async () => {
@@ -38,10 +37,14 @@ const Search = () => {
 
     const recentHistory = value.length > 0 ? value[value.length - 1] : "";
 
-    if (inputValue.current === recentHistory) return;
+    if (inputValue === recentHistory) return;
 
-    value.push(inputValue.current);
+    if (value.length > 5) value.shift();
+
+    value.push(inputValue);
     saveLS("search history", JSON.stringify(value));
+
+    setInputValue("");
   };
 
   const inputKeydownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -96,6 +99,7 @@ const Search = () => {
             onKeyDown={inputKeydownHandler}
             onFocusCapture={() => setIsClicked(true)}
             onBlurCapture={() => setIsClicked(false)}
+            value={inputValue}
           />
         </div>
       </section>
@@ -103,15 +107,15 @@ const Search = () => {
       {/* Search history */}
       <div
         className={`bg-white ${
-          isClicked && history.current.length > 0 ? "py-5 px-5" : "h-0 p-0"
+          isClicked && history.length > 0 ? "py-5 px-5" : "h-0 p-0"
         } border-dashed border-2 border-disabled overflow-hidden transition-all rounded-2.5xl shadow-slight-drop-container absolute w-full top-6`}
       >
-        {history.current.map((item, index) => {
+        {history.map((item, index) => {
           return (
             <div
               key={item}
               className={`text-placeholder font-semibold ${
-                history.current.length - 1 > index && "border-b-[1px]"
+                history.length - 1 > index && "border-b-[1px]"
               } py-1.75`}
             >
               {item}
