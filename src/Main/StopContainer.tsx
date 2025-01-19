@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import BusContainer, { BusContainerProps } from "./BusContainer";
-import RefreshIcon from "images/RefreshIcon.svg";
 import arrowDown from "images/arrowDown.svg";
 import arrowUp from "images/arrowUp.svg";
 import RefreshButton from "Common/RefreshButton";

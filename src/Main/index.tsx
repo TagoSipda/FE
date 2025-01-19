@@ -16,12 +16,14 @@ const tempStopItem: StopItemT = {
           isAI: true,
           remainMin: "21시간 10분",
           remainStops: 1,
+          no: 123,
         },
         {
           congestion: 6,
           isAI: false,
           remainMin: "21시간 10분",
           remainStops: 5,
+          no: 234,
         },
       ],
     },
@@ -34,6 +36,7 @@ const tempStopItem: StopItemT = {
           isAI: false,
           remainMin: "21시간 10분",
           remainStops: 5,
+          no: 345,
         },
       ],
     },
@@ -41,14 +44,17 @@ const tempStopItem: StopItemT = {
   id: 1,
 };
 
-const tempStops: StopItemT[] = Array(4).fill(tempStopItem);
+const tempStops: StopItemT[] = Array(4)
+  .fill(tempStopItem)
+  .map((stop, index) => ({ ...stop, id: index }));
+
 const Main = () => {
   return (
     <>
       <Header />
       <section className="py-8 px-6 overflow-hidden flex flex-col gap-6 h-main-list overflow-y-scroll">
         {tempStops.map((stop) => (
-          <StopContainer {...stop} />
+          <StopContainer {...stop} key={stop.id} />
         ))}
       </section>
     </>
