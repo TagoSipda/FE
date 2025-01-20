@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import BusContainer, { BusContainerProps } from "./BusContainer";
 import arrowDown from "images/arrowDown.svg";
 import arrowUp from "images/arrowUp.svg";
-import RefreshButton from "Common/RefreshButton";
+import RefreshButton from "Common/Icon/RefreshButton";
 
 export interface StopItemT {
   name: string;

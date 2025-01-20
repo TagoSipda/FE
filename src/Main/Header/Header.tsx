@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
 import Search from "./Search";
 import Setting from "images/settingLogo.svg";
-import CategoryDropdown from "Common/CategoryDropdown";
+import CategoryDropdown from "Common/Category/CategoryDropdown";
 import ModalContainer from "Common/ModalContainer";
+import CategoryList from "Common/Category/CategoryList";
 
 const Header = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(false);
@@ -15,8 +16,6 @@ const Header = () => {
   const closeCategoryList = () => {
     setIsCategoryOpen(false);
   };
-
-  console.log(isCategoryOpen);
 
   return (
     <>
@@ -38,10 +37,7 @@ const Header = () => {
 
       {isCategoryOpen && (
         <ModalContainer classNames=" " onClose={closeCategoryList}>
-          <section
-            className={` h-40 bg-white`}
-            style={{ top: `${headerRef.current?.clientHeight}px` }}
-          ></section>
+          <CategoryList headerRef={headerRef} />
         </ModalContainer>
       )}
     </>
