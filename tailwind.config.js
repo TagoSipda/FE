@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       colors: {
         main: "#9DBDFF",
-        grey: "#F8F8F8",
+        gray: "#F8F8F8",
         desc: "#767676",
         disabled: "#DBDBDB",
         placeholder: "#B9AEAE",
@@ -17,15 +17,15 @@ module.exports = {
         "slight-drop-container": "0px 3px 10px 1px rgba(0,0, 0, 0.1)",
       },
       fontSize: {
-        title: "22px",
-        h2: "18px",
-        desc: "12px",
+        "xl-2xl": "22px",
+        "sm-base": "15px",
       },
       borderRadius: {
         medium: "14px",
         "2.5xl": "20px",
       },
       spacing: {
+        1.25: "5px",
         1.75: "7px",
         2.25: "9px",
         3.25: "13px",

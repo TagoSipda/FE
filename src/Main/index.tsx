@@ -48,15 +48,21 @@ const tempStops: StopItemT[] = Array(4)
   .fill(tempStopItem)
   .map((stop, index) => ({ ...stop, id: index }));
 
+const MainContent = () => {
+  return (
+    <section className="py-8 px-6 overflow-hidden flex flex-col gap-6 h-main-list overflow-y-scroll">
+      {tempStops.map((stop) => (
+        <StopContainer {...stop} key={stop.id} />
+      ))}
+    </section>
+  );
+};
+
 const Main = () => {
   return (
     <>
       <Header />
-      <section className="py-8 px-6 overflow-hidden flex flex-col gap-6 h-main-list overflow-y-scroll">
-        {tempStops.map((stop) => (
-          <StopContainer {...stop} key={stop.id} />
-        ))}
-      </section>
+      <MainContent />
     </>
   );
 };

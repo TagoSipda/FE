@@ -32,13 +32,13 @@ const StopContainer = ({
   };
 
   return (
-    <article className="bg-grey shadow-drop-container pt-3.75 rounded-medium">
+    <article className="bg-gray shadow-drop-container pt-3.75 rounded-medium">
       <section className="pl-4.25 pr-3.25 py-0 mb-4.5">
         <div className="flex justify-between items-start">
-          <div className="text-title font-bold">{name}</div>
+          <div className="text-xl-2xl font-bold">{name}</div>
           <RefreshButton onClick={refresh} color="main" />
         </div>
-        <div className="text-desc">
+        <div className="text-xs">
           <span>{no}</span>
           <span>/</span>
           <span>{direction} 방향</span>

@@ -46,7 +46,7 @@ const BusContainer = ({
         <div>
           <img className="inline" src={BustIcon} alt="BustIcon" />
         </div>
-        <span className="text-h2 font-bold">{name}</span>
+        <span className="text-lg font-bold">{name}</span>
       </div>
 
       <div>

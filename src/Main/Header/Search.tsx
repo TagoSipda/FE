@@ -57,12 +57,10 @@ const Search = () => {
       e.stopPropagation();
 
       activeSearch();
-      console.log("inputKeydownHandler", e?.key);
     }
   };
 
   const clickSearchBtnHandler = () => {
-    console.log("clickSearchBtnHandler");
     activeSearch();
   };
 
@@ -93,7 +91,7 @@ const Search = () => {
           }`}
         >
           <input
-            className="text-placeholder w-full outline-none"
+            className="text-placeholder w-full outline-none font-medium"
             placeholder={isClicked ? "" : "버스번호·정류장 검색"}
             onChange={inputChangeHandler}
             onKeyDown={inputKeydownHandler}
