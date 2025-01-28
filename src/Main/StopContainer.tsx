@@ -27,12 +27,13 @@ const StopContainer = ({
     // 성공 시, stopList fetch 부르는 API 캐싱값 바꿔줘야 한다.
   };
   const clickCollapse = () => {
-    // 클릭 시, 해당 정거장에 별표 표시된 모든 버스 정보를 불러온다. -> GET API 호출
+    // 클릭 시, 해당 정거장에 별표 표시된 모든 버스 정보를 노출한다. 이미 데이터는 가지고 있음;
+    console.log("?");
     setIsExpand((pre) => !pre);
   };
 
   return (
-    <article className="bg-gray shadow-drop-container pt-3.75 rounded-medium">
+    <article className={`bg-gray shadow-drop-container pt-3.75 rounded-medium`}>
       <section className="pl-4.25 pr-3.25 py-0 mb-4.5">
         <div className="flex justify-between items-start">
           <div className="text-xl-2xl font-bold">{name}</div>
@@ -46,11 +47,24 @@ const StopContainer = ({
       </section>
 
       {busList ? (
-        <section className="px-3.25 flex flex-col gap-3.25">
-          {busList.map((bus, idx) => (
-            <BusContainer {...bus} key={bus.id} isPinned={idx === 0} />
-          ))}
-        </section>
+        <>
+          <section className="px-3.25 flex flex-col gap-3.25">
+            {busList.slice(0, 2).map((bus, idx) => (
+              <BusContainer {...bus} key={bus.id} isPinned={idx === 0} />
+            ))}
+          </section>
+          <section
+            className={`px-3.25 flex flex-col gap-3.25 mt-3.25 transition-all origin-top duration-100 ${
+              isExpand
+                ? "scale-y-100 h-auto opacity-100"
+                : "scale-y-0 h-0 opacity-0"
+            }`}
+          >
+            {busList.slice(2).map((bus, idx) => (
+              <BusContainer {...bus} key={bus.id} isPinned={idx === 0} />
+            ))}
+          </section>
+        </>
       ) : (
         <div>버스를 추가해주세요.</div>
       )}

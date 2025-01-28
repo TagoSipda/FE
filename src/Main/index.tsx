@@ -40,6 +40,32 @@ const tempStopItem: StopItemT = {
         },
       ],
     },
+    {
+      name: "구로03",
+      id: 3,
+      list: [
+        {
+          congestion: 6,
+          isAI: false,
+          remainMin: "21시간 10분",
+          remainStops: 5,
+          no: 345,
+        },
+      ],
+    },
+    {
+      name: "구로03",
+      id: 3,
+      list: [
+        {
+          congestion: 6,
+          isAI: false,
+          remainMin: "21시간 10분",
+          remainStops: 5,
+          no: 345,
+        },
+      ],
+    },
   ],
   id: 1,
 };
@@ -49,6 +75,7 @@ const tempStops: StopItemT[] = Array(4)
   .map((stop, index) => ({ ...stop, id: index }));
 
 const MainContent = () => {
+  // Local Storage에서 정보 가져옴
   return (
     <section className="py-8 px-6 overflow-hidden flex flex-col gap-6 h-main-list overflow-y-scroll">
       {tempStops.map((stop) => (
