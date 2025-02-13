@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import Search from "./Search";
 import Setting from "images/settingLogo.svg";
-import CategoryDropdown from "Common/Category/CategoryDropdown";
-import ModalContainer from "Common/ModalContainer";
-import CategoryList from "Common/Category/CategoryList";
+import CategoryDropdown from "components/Common/Category/CategoryDropdown";
+import ModalContainer from "components/Common/ModalContainer";
+import CategoryList from "components/Common/Category/CategoryList";
 
 const Header = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(false);

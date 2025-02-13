@@ -4,7 +4,8 @@
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.61.5",
-    "@tanstack/react-router": "^1.85.2",
+    "@tanstack/react-router": "^1.102.5",
+    "@tanstack/router-cli": "^1.102.6",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -22,7 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "route:gen": "tsr generate"
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +46,8 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.4.15"
+  },
+  "tanstackRouter": {
+    "routes": "src/routes"
   }
 }

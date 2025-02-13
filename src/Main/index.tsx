@@ -1,6 +1,6 @@
-import Header from "Main/Header/Header";
 import React from "react";
 import StopContainer, { StopItemT } from "./StopContainer";
+import Header from "./Header/Header";
 
 const tempStopItem: StopItemT = {
   name: "박미삼거리",

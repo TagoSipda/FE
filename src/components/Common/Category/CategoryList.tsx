@@ -1,7 +1,7 @@
-import StarIcon from "Common/Icon/StarIcon";
-import { MODAL_CONTENT_DEFAULT_CLASS } from "Common/ModalContainer";
 import React from "react";
 import { BASIC_CATE_COLOR } from "utils/types";
+import StarIcon from "../Icon/StarIcon";
+import { MODAL_CONTENT_DEFAULT_CLASS } from "../ModalContainer";
 
 interface CategoryItem {
   color: string;

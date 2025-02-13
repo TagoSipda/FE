@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowDown } from "../Icon/Arrow";
-import StarIcon from "Common/Icon/StarIcon";
+import StarIcon from "../Icon/StarIcon";
 
 const CategoryDropdown = ({
   clickCategoryHandler,
