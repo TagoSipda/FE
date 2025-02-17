@@ -1,6 +1,6 @@
 import React from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import Main from "Main";
+import Main from "components/Main";
 
 const Index = () => {
   return <Main />;

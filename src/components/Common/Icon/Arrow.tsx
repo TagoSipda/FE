@@ -37,14 +37,16 @@ export const ArrowDown = ({
   color = "#A594F9",
   width = 24,
   height = 24,
+  classNames = "",
 }: {
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   color?: string;
+  classNames?: string;
   width?: number;
   height?: number;
 }) => {
   return (
-    <div onClick={onClick} className={`text-${color}`}>
+    <div onClick={onClick} className={`text-${color} ${classNames}`}>
       <svg
         width={width}
         height={height}

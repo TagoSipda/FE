@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
-import Search from "./Search";
 import Setting from "images/settingLogo.svg";
 import CategoryDropdown from "components/Common/Category/CategoryDropdown";
 import ModalContainer from "components/Common/ModalContainer";
 import CategoryList from "components/Common/Category/CategoryList";
+import SearchBar from "./SearchBar";
 
 const Header = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState<boolean>(false);
@@ -24,7 +24,7 @@ const Header = () => {
         ref={headerRef}
       >
         <div className=" relative">
-          <Search />
+          <SearchBar />
         </div>
 
         <div className="flex justify-between items-center pt-4">
