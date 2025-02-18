@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { SearchContext } from "routes/search";
 
 const ToggleText = ({
   text,
@@ -13,7 +14,7 @@ const ToggleText = ({
 );
 
 const Toggle = () => {
-  const [isBus, setIsBus] = useState(true);
+  const { isBus, setIsBus } = useContext(SearchContext);
 
   return (
     <div
@@ -22,7 +23,7 @@ const Toggle = () => {
     >
       {/* 이동하는 강조 표시 (배경) */}
       <div
-        className={`absolute z-10 shadow-drop-container w-[55%] h-10 bg-main rounded-full transition-transform duration-300 ${
+        className={`absolute z-10 w-[55%] h-10 bg-main rounded-full transition-transform duration-300 ${
           isBus ? "translate-x-0" : "translate-x-[82%]"
         }`}
       />
