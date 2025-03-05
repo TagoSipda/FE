@@ -10,6 +10,7 @@ module.exports = {
         disabled: "#DBDBDB",
         placeholder: "#B9AEAE",
         divider: "#F2EFEF",
+        tag: "#4F4F4F",
       },
       boxShadow: {
         header: "0px 1px 12px rgba(150,175, 225, 0.14)",

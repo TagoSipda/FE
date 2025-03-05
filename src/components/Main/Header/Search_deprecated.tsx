@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import SearchImg from "images/search.svg";
 import useLocalStorage from "hooks/useLocalStorage";
+import { LS_NAME } from "utils/types";
 
 const Search = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -9,19 +10,9 @@ const Search = () => {
 
   const { saveLS, getValueFromLS } = useLocalStorage();
 
-  const getHistoryValues = async () => {
-    const originValue = await getValueFromLS("search history");
-    const value: string[] =
-      originValue && typeof originValue === "string"
-        ? JSON.parse(originValue)
-        : [];
-
-    return value;
-  };
-
   useEffect(() => {
     const getValues = async () => {
-      const value = await getHistoryValues();
+      const value = await getValueFromLS(LS_NAME.RECENT_SEARCH_LIST);
       setHistory(value.reverse());
     };
 
@@ -33,7 +24,7 @@ const Search = () => {
   };
 
   const activeSearch = async () => {
-    const value = await getHistoryValues();
+    const value = await getValueFromLS(LS_NAME.RECENT_SEARCH_LIST);
 
     const recentHistory = value.length > 0 ? value[value.length - 1] : "";
 
@@ -42,7 +33,7 @@ const Search = () => {
     if (value.length > 5) value.shift();
 
     value.push(inputValue);
-    saveLS("search history", JSON.stringify(value));
+    saveLS(LS_NAME.RECENT_SEARCH_LIST, JSON.stringify(value));
 
     setInputValue("");
   };

@@ -1,5 +1,6 @@
 import useLocalStorage from "hooks/useLocalStorage";
 import React, { useEffect, useState } from "react";
+import { LS_NAME } from "utils/types";
 
 const EmptyView = () => {
   return <div>Empty View</div>;
@@ -15,7 +16,7 @@ const RecentList = () => {
 
   useEffect(() => {
     const getHistoryValues = async () => {
-      const originValue = await getValueFromLS("search history");
+      const originValue = await getValueFromLS(LS_NAME.RECENT_SEARCH_LIST);
       const value: string[] =
         originValue && typeof originValue === "string"
           ? JSON.parse(originValue)

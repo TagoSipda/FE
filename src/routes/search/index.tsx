@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown } from "components/Common/Icon/Arrow";
+import { createFileRoute } from "@tanstack/react-router";
+import BackButton from "components/Common/Icon/BackButton";
 import RecentList from "components/Search/RecentList";
 import ResultList from "components/Search/ResultList";
 import Toggle from "components/Search/Toggle";
@@ -22,16 +22,6 @@ export const SearchContext = createContext<SearchContextT>({
   isSearching: false,
   setIsSearching: () => {},
 });
-
-const BackButton = () => {
-  return (
-    <Link to={"/"}>
-      <button className="bg-main rounded-full p-2">
-        <ArrowDown color={"#FFFFFF"} classNames="rotate-90" />
-      </button>
-    </Link>
-  );
-};
 
 const InputSearch = () => {
   const { setInputValue, input } = useContext(SearchContext);
@@ -79,8 +69,7 @@ const Search = () => {
       <div className="">
         {/* Search bar */}
         <section className="flex items-center gap-2 pb-2 shadow-header py-4 px-6">
-          <BackButton />
-
+          <BackButton link="/" />
           <InputSearch />
         </section>
 
