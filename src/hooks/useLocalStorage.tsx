@@ -1,12 +1,18 @@
-export const LS_KEYS = "search history";
+import { LS_NAME } from "utils/types";
 
 const useLocalStorage = () => {
-  const saveLS = (key: typeof LS_KEYS, value: string) => {
+  const saveLS = (key: LS_NAME, value: string) => {
     localStorage.setItem(key, value);
   };
 
-  const getValueFromLS = async (key: typeof LS_KEYS) => {
-    return await localStorage.getItem(key);
+  const getValueFromLS = async (key: LS_NAME) => {
+    const originValue = await localStorage.getItem(key);
+    const value =
+      originValue && typeof originValue === "string"
+        ? JSON.parse(originValue)
+        : [];
+
+    return value;
   };
 
   return { saveLS, getValueFromLS };

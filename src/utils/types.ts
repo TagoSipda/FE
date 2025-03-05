@@ -10,3 +10,8 @@ export const BASIC_CATE_COLOR = [
   "#FF99D9",
   "#C56021",
 ];
+
+export enum LS_NAME {
+  BOOKMARK_LIST = "BOOKMARK_LIST",
+  RECENT_SEARCH_LIST = "RECENT_SEARCH_LIST",
+}

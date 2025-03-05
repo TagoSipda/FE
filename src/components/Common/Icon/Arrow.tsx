@@ -1,16 +1,18 @@
 import React from "react";
 
+export interface PArrowUp {
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  color?: string;
+  width?: number;
+  height?: number;
+}
+
 export const ArrowUp = ({
   onClick,
   color = "#A594F9",
   width = 24,
   height = 24,
-}: {
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-  color?: string;
-  width?: number;
-  height?: number;
-}) => {
+}: PArrowUp) => {
   return (
     <div onClick={onClick} className={`text-${color}`}>
       <svg
@@ -57,9 +59,9 @@ export const ArrowDown = ({
         <path
           d="M16 10L12 14L8 10"
           stroke={color}
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

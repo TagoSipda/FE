@@ -10,6 +10,7 @@ module.exports = {
         disabled: "#DBDBDB",
         placeholder: "#B9AEAE",
         divider: "#F2EFEF",
+        tag: "#4F4F4F",
       },
       boxShadow: {
         header: "0px 1px 12px rgba(150,175, 225, 0.14)",
@@ -26,6 +27,7 @@ module.exports = {
       },
       spacing: {
         1.25: "5px",
+        1.5: "6px",
         1.75: "7px",
         2.25: "9px",
         2.5: "10px",

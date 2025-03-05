@@ -13,6 +13,7 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as SearchIndexImport } from './routes/search/index'
+import { Route as BEditIndexImport } from './routes/b-edit/index'
 
 // Create/Update Routes
 
@@ -28,6 +29,12 @@ const SearchIndexRoute = SearchIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const BEditIndexRoute = BEditIndexImport.update({
+  id: '/b-edit/',
+  path: '/b-edit/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -37,6 +44,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/b-edit/': {
+      id: '/b-edit/'
+      path: '/b-edit'
+      fullPath: '/b-edit'
+      preLoaderRoute: typeof BEditIndexImport
       parentRoute: typeof rootRoute
     }
     '/search/': {
@@ -53,36 +67,41 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/b-edit': typeof BEditIndexRoute
   '/search': typeof SearchIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/b-edit': typeof BEditIndexRoute
   '/search': typeof SearchIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/b-edit/': typeof BEditIndexRoute
   '/search/': typeof SearchIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search'
+  fullPaths: '/' | '/b-edit' | '/search'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search'
-  id: '__root__' | '/' | '/search/'
+  to: '/' | '/b-edit' | '/search'
+  id: '__root__' | '/' | '/b-edit/' | '/search/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BEditIndexRoute: typeof BEditIndexRoute
   SearchIndexRoute: typeof SearchIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BEditIndexRoute: BEditIndexRoute,
   SearchIndexRoute: SearchIndexRoute,
 }
 
@@ -97,11 +116,15 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/b-edit/",
         "/search/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/b-edit/": {
+      "filePath": "b-edit/index.tsx"
     },
     "/search/": {
       "filePath": "search/index.tsx"
