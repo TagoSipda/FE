@@ -1,5 +1,14 @@
-import React from "react";
-import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import React, { useCallback, useState } from "react";
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  PointerSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -8,34 +17,41 @@ import { TStop } from "utils/types";
 import StopItem from "./StopItem";
 
 interface StopItemListProps {
-  list: TStop[] | null;
-  onReorder?: (newOrder: TStop[]) => void;
+  list: TStop[];
+  handleDragEnd: (event: DragEndEvent) => void;
 }
 
-const StopItemList = ({ list, onReorder }: StopItemListProps) => {
-  if (!list || list.length === 0) {
-    return (
-      <div className="text-gray-500 text-center mt-4">정류장이 없습니다.</div>
-    );
-  }
+const StopItemList = ({ list, handleDragEnd }: StopItemListProps) => {
+  const [activeId, setActiveId] = useState<string>("");
 
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
+  const sensors = useSensors(useSensor(PointerSensor));
 
-    if (over && active.id !== over.id) {
-      const oldIndex = list.findIndex((item) => item.number === active.id);
-      const newIndex = list.findIndex((item) => item.number === over.id);
-
-      const newList = [...list];
-      const [movedItem] = newList.splice(oldIndex, 1);
-      newList.splice(newIndex, 0, movedItem);
-
-      //   onReorder?.(newList);
-    }
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    active && setActiveId(active.id as string);
   };
 
+  const _hangleDragEnd = (event: DragEndEvent) => {
+    handleDragEnd(event);
+    setActiveId("");
+  };
+
+  const getStop = useCallback(
+    (id: string) => {
+      const item = list.find((value) => value.number === id);
+
+      if (item) return item;
+    },
+    [list]
+  );
+
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    <DndContext
+      collisionDetection={closestCenter}
+      onDragEnd={_hangleDragEnd}
+      onDragStart={handleDragStart}
+      sensors={sensors}
+    >
       <SortableContext
         items={list.map((stop) => stop.number)}
         strategy={verticalListSortingStrategy}
@@ -46,6 +62,20 @@ const StopItemList = ({ list, onReorder }: StopItemListProps) => {
           ))}
         </div>
       </SortableContext>
+      <DragOverlay>
+        {activeId ? (
+          <>
+            {
+              // <div id={activeId}></div>
+              <StopItem
+                key={activeId}
+                id={activeId}
+                stop={getStop(activeId) as TStop}
+              />
+            }
+          </>
+        ) : null}
+      </DragOverlay>
     </DndContext>
   );
 };

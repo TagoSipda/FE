@@ -1,5 +1,5 @@
 import Header from "components/BookmarkEdit/Header";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import sEditIcon from "images/s-editIcon.svg";
 import Tag from "components/BookmarkEdit/Tag";
 import StarIcon from "components/Common/Icon/StarIcon";
@@ -9,11 +9,18 @@ import { TBookmark, TStop } from "utils/types";
 import DeleteIcon from "images/trashCan.svg";
 import StopItemList from "components/BookmarkEdit/StopItemList";
 import { stopTemp } from "components/Search/ResultList";
+import { DragEndEvent } from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
 const StopEdit = () => {
   const { bId } = Route.useLoaderData();
   const { getBookmarkInfo, updateBookmarkInfo } = useLocalStorage();
   const [bookmark, setBookmark] = useState<TBookmark | null>(null);
+  const [list, setList] = useState<Array<TStop>>(stopTemp || []); // 정보 있을 때: bookmark?.stops
+
+  useEffect(() => {
+    if (!list && bookmark?.stops) setList(bookmark?.stops);
+  }, [bookmark?.stops, list]);
 
   useEffect(() => {
     const fetchBookmark = async () => {
@@ -29,6 +36,10 @@ const StopEdit = () => {
     if (!bookmark) fetchBookmark();
   }, [bId, bookmark, getBookmarkInfo]);
 
+  useEffect(() => {
+    handleReorder(list);
+  }, [list]);
+
   const handleReorder = async (newStops: TStop[]) => {
     if (!bookmark) return;
 
@@ -39,6 +50,19 @@ const StopEdit = () => {
 
     setBookmark(newBookmark);
     await updateBookmarkInfo(`#${bId}`, newBookmark);
+  };
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (over && active.id !== over.id) {
+      const oldIndex = list.findIndex((item) => item?.number === active.id);
+      const newIndex = list.findIndex((item) => item?.number === over.id);
+
+      setList(arrayMove(list, oldIndex, newIndex));
+    }
+
+    return;
   };
 
   return (
@@ -79,10 +103,15 @@ const StopEdit = () => {
             </button>
           </div>
 
-          <StopItemList
-            list={bookmark.stops || stopTemp}
-            onReorder={handleReorder}
-          />
+          <div>
+            {!list || list.length === 0 ? (
+              <div className="text-gray-500 text-center mt-4">
+                정류장이 없습니다.
+              </div>
+            ) : (
+              <StopItemList handleDragEnd={handleDragEnd} list={list} />
+            )}
+          </div>
         </section>
       ) : (
         <div>정보가 없습니다.</div>

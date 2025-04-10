@@ -22,6 +22,7 @@ const StopItem = ({ stop, id }: StopItemProps) => {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
+    cursor: "grab",
   };
 
   return (
